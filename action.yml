@@ -1,0 +1,40 @@
+name: 'Palmer AI Test Runner'
+description: 'Run AI-powered tests with Palmer'
+branding:
+  icon: 'check-circle'
+  color: 'green'
+inputs:
+  api-key:
+    description: 'Palmer API key (defaults to PALMER_API_KEY env var)'
+    required: false
+  prompt:
+    description: 'Test prompt describing what to test'
+    required: true
+  browser-enabled:
+    description: 'Enable browser for tests'
+    required: false
+    default: 'false'
+  branch:
+    description: 'Branch to test (defaults to current branch)'
+    required: false
+    default: ''
+  wait:
+    description: 'Wait for run to complete'
+    required: false
+    default: 'true'
+  timeout:
+    description: 'Timeout in seconds when waiting'
+    required: false
+    default: '600'
+outputs:
+  run-id:
+    description: 'Palmer run ID'
+  status:
+    description: 'Run status (passed, failed, error)'
+  summary:
+    description: 'Run summary'
+  dashboard-url:
+    description: 'Link to the Palmer dashboard for this run'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
