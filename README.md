@@ -42,8 +42,8 @@ Pass secrets to the test environment using the `PALMER_SECRET_` prefix:
 
 ### Private repositories
 
-If Palmer needs to clone a private GitHub repository, forward the workflow's
-job token so ripatorium can authenticate the sandbox clone step:
+If Palmer needs to clone a private GitHub repository, forward a GitHub token so
+ripatorium can authenticate the sandbox clone step:
 
 ```yaml
 name: Palmer Tests
@@ -69,8 +69,12 @@ jobs:
           PALMER_API_URL: https://api.generalvolition.com
 ```
 
-This pattern is intended for trusted GitHub Actions runs where the job token
-has `contents: read` access to the target repository.
+This pattern is intended for trusted GitHub Actions runs where the forwarded
+token has `contents: read` access to the target repository under test.
+
+If your ripatorium backend also clones a private Palmer source repository,
+configure a backend `GH_TOKEN` separately in your server environment. That
+server-side token is not forwarded by the action.
 
 ### Explicit API key
 
