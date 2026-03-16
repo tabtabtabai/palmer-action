@@ -29996,7 +29996,7 @@ async function run() {
         const createResponse = await fetch(`${apiUrl}/api/runs`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${apiKey}`,
+                'X-API-Key': apiKey,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
@@ -30040,7 +30040,7 @@ async function run() {
             await new Promise((resolve) => setTimeout(resolve, 10000));
             const pollResponse = await fetch(`${apiUrl}/api/runs/${runId}`, {
                 headers: {
-                    Authorization: `Bearer ${apiKey}`,
+                    'X-API-Key': apiKey,
                 },
             });
             if (!pollResponse.ok) {
