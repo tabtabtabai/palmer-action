@@ -40,6 +40,38 @@ Pass secrets to the test environment using the `PALMER_SECRET_` prefix:
     PALMER_SECRET_DATABASE_URL: ${{ secrets.DATABASE_URL }}
 ```
 
+### Private repositories
+
+If Palmer needs to clone a private GitHub repository, forward the workflow's
+job token so ripatorium can authenticate the sandbox clone step:
+
+```yaml
+name: Palmer Tests
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: tabtabtabai/palmer-action@v1
+        with:
+          prompt: "Verify the dashboard loads correctly"
+          browser-enabled: true
+          branch: ${{ github.event.pull_request.head.ref }}
+        env:
+          PALMER_API_KEY: ${{ secrets.PALMER_API_KEY }}
+          PALMER_SECRET_GITHUB_TOKEN: ${{ github.token }}
+          # Optional when self-hosting Palmer / ripatorium:
+          PALMER_API_URL: https://api.generalvolition.com
+```
+
+This pattern is intended for trusted GitHub Actions runs where the job token
+has `contents: read` access to the target repository.
+
 ### Explicit API key
 
 Override the default `PALMER_API_KEY` env var:
@@ -73,9 +105,11 @@ Override the default `PALMER_API_KEY` env var:
 
 ## Secret forwarding
 
-Any environment variable prefixed with `PALMER_SECRET_` is forwarded to the test environment. The prefix is stripped:
+Any environment variable prefixed with `PALMER_SECRET_` is made available to the
+Palmer run. The prefix is stripped:
 
 - `PALMER_SECRET_OPENAI_API_KEY` → `OPENAI_API_KEY` in the sandbox
 - `PALMER_SECRET_DATABASE_URL` → `DATABASE_URL` in the sandbox
+- `PALMER_SECRET_GITHUB_TOKEN` → `GITHUB_TOKEN` for private GitHub repo cloning
 
 This uses GitHub's native secret management — Palmer never stores your secrets.
