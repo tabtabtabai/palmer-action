@@ -26,6 +26,10 @@ inputs:
     description: 'Timeout in seconds when waiting'
     required: false
     default: '600'
+  github-token:
+    description: 'GitHub token used to comment the Palmer run link on pull requests/issues'
+    required: false
+    default: ''
 outputs:
   run-id:
     description: 'Palmer run ID'

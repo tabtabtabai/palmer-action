@@ -63,6 +63,7 @@ jobs:
           prompt: "Verify the dashboard loads correctly"
           browser-enabled: true
           branch: ${{ github.event.pull_request.head.ref }}
+          github-token: ${{ github.token }}
         env:
           PALMER_API_KEY: ${{ secrets.PALMER_API_KEY }}
           PALMER_SECRET_GITHUB_TOKEN: ${{ github.token }}
@@ -101,6 +102,7 @@ Override the default `PALMER_API_KEY` env var:
 | `branch` | No | Current branch | Branch to test |
 | `wait` | No | `true` | Wait for run to complete |
 | `timeout` | No | `600` | Timeout in seconds when waiting |
+| `github-token` | No | — | GitHub token used to comment the Palmer run link on pull requests/issues |
 
 ## Outputs
 
@@ -121,3 +123,13 @@ Palmer run. The prefix is stripped:
 - `PALMER_SECRET_GITHUB_TOKEN` → `GITHUB_TOKEN` for private GitHub repo cloning
 
 This uses GitHub's native secret management — Palmer never stores your secrets.
+
+## Run link visibility
+
+The action always writes the Palmer dashboard URL into:
+
+- the workflow logs as a notice
+- the GitHub Actions step summary
+
+If you also want that link posted back onto the pull request, pass
+`github-token: ${{ github.token }}` and grant `issues: write`.
