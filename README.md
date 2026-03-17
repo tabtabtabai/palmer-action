@@ -1,6 +1,6 @@
 # Palmer Action
 
-Run AI-powered tests with [Palmer](https://usepalmer.ai).
+Run AI-powered tests with [Palmer](https://palmer.generalvolition.com).
 
 ## Usage
 

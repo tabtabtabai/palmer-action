@@ -29975,7 +29975,7 @@ async function run() {
         const branchInput = core.getInput('branch');
         const wait = core.getInput('wait') !== 'false';
         const timeout = parseInt(core.getInput('timeout') || '600', 10);
-        const apiUrl = (process.env.PALMER_API_URL || 'https://api.usepalmer.ai').replace(/\/+$/, '');
+        const apiUrl = (process.env.PALMER_API_URL || 'https://api.generalvolition.com').replace(/\/+$/, '');
         // Collect PALMER_SECRET_* env vars
         const secrets = {};
         for (const key of Object.keys(process.env)) {
