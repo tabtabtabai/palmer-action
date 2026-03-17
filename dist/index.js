@@ -29964,12 +29964,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(7484));
 const github = __importStar(__nccwpck_require__(3228));
 const COMMENT_MARKER = '<!-- palmer-run-link -->';
-function resolveDashboardUrl(runId, dashboardUrl) {
-    if (dashboardUrl) {
-        return dashboardUrl;
-    }
-    const appUrl = (process.env.PALMER_APP_URL || 'https://palmer.generalvolition.com').replace(/\/+$/, '');
-    return `${appUrl}/dashboard/runs/${runId}`;
+const PUBLIC_DASHBOARD_BASE_URL = 'https://palmer.generalvolition.com';
+function resolveDashboardUrl(runId, _dashboardUrl) {
+    return `${PUBLIC_DASHBOARD_BASE_URL}/dashboard/runs/${runId}`;
 }
 async function publishRunLink(url) {
     core.notice(`Palmer run: ${url}`);
