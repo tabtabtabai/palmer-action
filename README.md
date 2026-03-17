@@ -52,6 +52,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 jobs:
   test:
@@ -67,10 +68,13 @@ jobs:
           PALMER_SECRET_GITHUB_TOKEN: ${{ github.token }}
           # Optional when self-hosting Palmer / ripatorium:
           PALMER_API_URL: https://api.generalvolition.com
+          PALMER_APP_URL: https://palmer.generalvolition.com
 ```
 
 This pattern is intended for trusted GitHub Actions runs where the forwarded
 token has `contents: read` access to the target repository under test.
+If you want Palmer to leave a PR comment with the run link, also grant
+`issues: write`.
 
 If your ripatorium backend also clones a private Palmer source repository,
 configure a backend `GH_TOKEN` separately in your server environment. That
