@@ -24,6 +24,21 @@ jobs:
         with:
           prompt: "Run all e2e tests and verify the checkout flow"
           browser-enabled: true
+
+### With an explicit provider
+
+Use the `provider` input when you want Palmer to use a non-default backend,
+for example Codex:
+
+```yaml
+- uses: tabtabtabai/palmer-action@v1
+  with:
+    prompt: "Run the checkout smoke tests"
+    browser-enabled: true
+    provider: codex
+  env:
+    PALMER_SECRET_OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+```
 ```
 
 ### With secret forwarding
@@ -99,6 +114,7 @@ Override the default `PALMER_API_KEY` env var:
 | `api-key` | No | `PALMER_API_KEY` env var | Palmer API key |
 | `prompt` | **Yes** | — | Test prompt describing what to test |
 | `browser-enabled` | No | `false` | Enable browser for tests |
+| `provider` | No | Current Palmer default | Provider passed to Palmer (for example `codex`) |
 | `branch` | No | Current branch | Branch to test |
 | `wait` | No | `true` | Wait for run to complete |
 | `timeout` | No | `600` | Timeout in seconds when waiting |
@@ -121,6 +137,9 @@ Palmer run. The prefix is stripped:
 - `PALMER_SECRET_OPENAI_API_KEY` → `OPENAI_API_KEY` in the sandbox
 - `PALMER_SECRET_DATABASE_URL` → `DATABASE_URL` in the sandbox
 - `PALMER_SECRET_GITHUB_TOKEN` → `GITHUB_TOKEN` for private GitHub repo cloning
+
+For `provider: codex`, forward whatever credential Palmer expects for that
+provider. A common setup is `PALMER_SECRET_OPENAI_API_KEY`.
 
 This uses GitHub's native secret management — Palmer never stores your secrets.
 

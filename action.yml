@@ -14,6 +14,10 @@ inputs:
     description: 'Enable browser for tests'
     required: false
     default: 'false'
+  provider:
+    description: 'Palmer provider to use (for example: codex)'
+    required: false
+    default: ''
   branch:
     description: 'Branch to test (defaults to current branch)'
     required: false

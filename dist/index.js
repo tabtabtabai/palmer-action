@@ -30055,6 +30055,7 @@ async function run() {
         }
         const prompt = core.getInput('prompt', { required: true });
         const browserEnabled = core.getInput('browser-enabled') === 'true';
+        const provider = core.getInput('provider').trim();
         const branchInput = core.getInput('branch');
         const wait = core.getInput('wait') !== 'false';
         const timeout = parseInt(core.getInput('timeout') || '600', 10);
@@ -30075,6 +30076,17 @@ async function run() {
         const branch = branchInput || github.context.ref;
         const commitSha = github.context.sha;
         core.info(`Starting Palmer run for ${repoUrl} on ${branch}`);
+        const requestBody = {
+            repo_url: repoUrl,
+            branch,
+            commit_sha: commitSha,
+            prompt,
+            browser_enabled: browserEnabled,
+            secrets,
+        };
+        if (provider) {
+            requestBody.provider = provider;
+        }
         // POST /api/runs
         const createResponse = await fetch(`${apiUrl}/api/runs`, {
             method: 'POST',
@@ -30082,14 +30094,7 @@ async function run() {
                 'X-API-Key': apiKey,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                repo_url: repoUrl,
-                branch,
-                commit_sha: commitSha,
-                prompt,
-                browser_enabled: browserEnabled,
-                secrets,
-            }),
+            body: JSON.stringify(requestBody),
         });
         if (!createResponse.ok) {
             const body = await createResponse.text();
